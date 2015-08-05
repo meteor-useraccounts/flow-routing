@@ -6,41 +6,37 @@
 // and it is needed to define a Meteor package
 'use strict';
 
-
-var Both = ['client', 'server'];
-var Client = 'client';
-
-
 Package.describe({
   name: 'useraccounts:flow-routing',
   summary: 'UserAccounts package providing routes configuration capability via kadira:flow-router.',
-  version: '2.0.0',
+  version: '1.11.1',
   git: 'https://github.com/meteor-useraccounts/flow-routing.git'
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0');
+  api.versionsFrom('METEOR@1.0.3');
 
-  // Logger
   api.use([
-    'jag:pince@0.0.5',
+    'check',
+    'kadira:blaze-layout',
+    'kadira:flow-router',
     'underscore',
     'useraccounts:core',
-    'kadira:flow-router',
-    'kadira:blaze-layout',
-    'reactive-var',
-  ], Both);
+  ], ['client', 'server']);
 
   api.imply([
-    'useraccounts:core@2.0.0',
-    'kadira:flow-router@2.0.1',
     'kadira:blaze-layout@2.0.0',
-  ], Both);
+    'kadira:flow-router@2.0.1',
+    'useraccounts:core@1.11.1',
+  ], ['client', 'server']);
 
-  // Base Class instantiation
   api.addFiles([
-    'src/_globals.js',
-    'src/logger.js',
-    'src/main.js'
-  ], Both);
+    'lib/core.js',
+  ], ['server']);
+
+  api.addFiles([
+    'lib/core.js',
+    'lib/client.js',
+    'lib/templates_helpers/at_input.js',
+  ], ['client']);
 });

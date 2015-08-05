@@ -1,1 +1,0 @@
-UALog = undefined;
