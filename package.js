@@ -26,16 +26,15 @@ Package.onUse(function(api) {
 
   api.imply([
     'kadira:blaze-layout@2.0.0',
-    'kadira:flow-router@2.0.1',
+    'kadira:flow-router@2.0.2',
     'useraccounts:core@1.11.1',
   ], ['client', 'server']);
 
   api.addFiles([
     'lib/core.js',
-  ], ['server']);
+  ], ['client', 'server']);
 
   api.addFiles([
-    'lib/core.js',
     'lib/client.js',
     'lib/templates_helpers/at_input.js',
   ], ['client']);
