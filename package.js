@@ -22,13 +22,13 @@ Package.onUse(function(api) {
     'kadira:blaze-layout',
     'kadira:flow-router',
     'underscore',
-    'useraccounts:core',
+    'useraccounts:core'
   ], ['client', 'server']);
 
   api.imply([
     'kadira:blaze-layout@2.0.0',
-    'kadira:flow-router@2.0.2',
-    'useraccounts:core@1.11.1',
+    'kadira:flow-router@2.1.1',
+    'useraccounts:core@1.11.1'
   ], ['client', 'server']);
 
   api.addFiles([
