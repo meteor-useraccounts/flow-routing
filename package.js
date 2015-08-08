@@ -35,7 +35,7 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.addFiles([
-    'lib/client.js',
-    'lib/templates_helpers/at_input.js',
+    'lib/client/client.js',
+    'lib/client/templates_helpers/at_input.js',
   ], ['client']);
 });
