@@ -89,5 +89,26 @@ AccountsTemplates.configureRoute('signIn', {
 
 All options are passed to FlowRouter.route() which then creates a new custom route (see the official Flow Router documentation [here](https://atmospherejs.com/kadira/flow-router) for more details).  All the above fields are optional and fall back to default values in case you don't provide them. 
 
+## Content Protection
+
+If you want to protect a route by making sure a user is signed in, you can add the `AccountsTemplates.ensureSignedIn` check in your route's enter triggers like this:
+
+```js
+FlowRouter.route('/private', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
+  action: function() {
+    BlazeLayout.render(...)
+  }
+});
+```
+
+If the user isn't signed in, they will be redirected to your sign in route and then redirected back to the original route after they have successfully signed in.
+
+Or if you want to protect ALL routes in your app:
+
+```js
+FlowRouter.triggers.enter([AccountsTemplates.ensureSignedIn]);
+```
+
 [1]: https://atmospherejs.com/kadira/flow-router
 [2]: https://atmospherejs.com/kadira/blaze-layout
