@@ -18,7 +18,6 @@ Package.onUse(function(api) {
 
   api.use([
     'check',
-    'templating',
     'kadira:blaze-layout',
     'kadira:flow-router',
     'underscore',
@@ -37,7 +36,6 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'lib/client/client.js',
-    'lib/client/templates_helpers/at_input.js',
-    'lib/client/templates_helpers/ensure_signed_in.html'
+    'lib/client/templates_helpers/at_input.js'
   ], ['client']);
 });
