@@ -5,7 +5,7 @@ User Accounts is a suite of packages for the [Meteor.js](https://www.meteor.com/
 This package is an optional add-on for integration with [Flow Router][1] and [Blaze Layout][2].
 
 ## Configuration
-
+å
 Before you configure routes for User Accounts with Flow Router, you will need to make sure you have set a few default configuration items.  
 
 Assuming you have a main layout that looks like this:
@@ -29,9 +29,9 @@ Assuming you have a main layout that looks like this:
 ```
 
 You would configure this package to use it like this:
-
 ```js
 AccountsTemplates.configure({
+    defaultTemplate: 'myCustomFullPageAtForm',
     defaultLayout: 'myLayout',
     defaultLayoutRegions: {
         nav: 'myNav',
@@ -41,7 +41,7 @@ AccountsTemplates.configure({
 });
 ```
 
-If you don't have extra content regions (nav, footer, etc) you should pass an empty object to the config like this:
+If you don't have extra content regions (nav, footer, etc) you should pass an empty object to ```defaultLayoutRegions``` key of the config.
 
 ```js
 AccountsTemplates.configure({
@@ -50,6 +50,10 @@ AccountsTemplates.configure({
     defaultContentRegion: 'main'
 });
 ```
+
+Useraccounts:flow-routing uses the internal useraccounts 
+
+```fullPageAtForm``` is the built-in template useraccounts uses by default for its forms. You can override it on a per-route basis (see below) or replace it with ```defaultTemplate:``` field as above (templates specified in route config will still take precedence).  Omit ```defaultTemplate``` (or set to an empty string) to use the ```fullPageAtForm``` template built-in to your useraccounts UI package (ex [material](https://github.com/meteor-useraccounts/materialize/blob/master/lib/full_page_at_form.html)).
 
 NOTE: The above configs must load BEFORE your AccountsTemplates routes are defined (next section).
 
