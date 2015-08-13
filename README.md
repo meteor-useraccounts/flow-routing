@@ -5,7 +5,7 @@ User Accounts is a suite of packages for the [Meteor.js](https://www.meteor.com/
 This package is an optional add-on for integration with [Flow Router][1] and [Blaze Layout][2].
 
 ## Configuration
-å
+
 Before you configure routes for User Accounts with Flow Router, you will need to make sure you have set a few default configuration items.  
 
 Assuming you have a main layout that looks like this:
@@ -29,6 +29,7 @@ Assuming you have a main layout that looks like this:
 ```
 
 You would configure this package to use it like this:
+
 ```js
 AccountsTemplates.configure({
     defaultTemplate: 'myCustomFullPageAtForm',
