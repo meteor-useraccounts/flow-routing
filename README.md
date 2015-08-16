@@ -32,6 +32,7 @@ You would configure this package to use it like this:
 
 ```js
 AccountsTemplates.configure({
+    defaultTemplate: 'myCustomFullPageAtForm',
     defaultLayout: 'myLayout',
     defaultLayoutRegions: {
         nav: 'myNav',
@@ -41,7 +42,7 @@ AccountsTemplates.configure({
 });
 ```
 
-If you don't have extra content regions (nav, footer, etc) you should pass an empty object to the config like this:
+If you don't have extra content regions (nav, footer, etc) you should pass an empty object to ```defaultLayoutRegions``` key of the config.
 
 ```js
 AccountsTemplates.configure({
@@ -50,6 +51,10 @@ AccountsTemplates.configure({
     defaultContentRegion: 'main'
 });
 ```
+
+Useraccounts:flow-routing uses the internal useraccounts 
+
+```fullPageAtForm``` is the built-in template useraccounts uses by default for its forms. You can override it on a per-route basis (see below) or replace it with ```defaultTemplate:``` field as above (templates specified in route config will still take precedence).  Omit ```defaultTemplate``` (or set to an empty string) to use the ```fullPageAtForm``` template built-in to your useraccounts UI package (ex [material](https://github.com/meteor-useraccounts/materialize/blob/master/lib/full_page_at_form.html)).
 
 NOTE: The above configs must load BEFORE your AccountsTemplates routes are defined (next section).
 
