@@ -23,7 +23,8 @@ Package.onUse(function(api) {
 
   // Logger
   api.use([
-    'jag:pince@0.0.5',
+    'check',
+    'jag:pince@0.0.9',
     'underscore',
     'useraccounts:core',
     'kadira:flow-router',
@@ -37,10 +38,13 @@ Package.onUse(function(api) {
     'kadira:blaze-layout@2.0.0',
   ], Both);
 
-  // Base Class instantiation
   api.addFiles([
     'src/_globals.js',
     'src/logger.js',
     'src/main.js'
   ], Both);
+
+  api.addFiles([
+    'src/client.js'
+  ], Client);
 });
