@@ -92,7 +92,20 @@ AccountsTemplates.configureRoute('signIn', {
 });
 ```
 
-All options are passed to FlowRouter.route() which then creates a new custom route (see the official Flow Router documentation [here](https://atmospherejs.com/kadira/flow-router) for more details).  All the above fields are optional and fall back to default values in case you don't provide them. 
+All options are passed to FlowRouter.route() which then creates a new custom route (see the official Flow Router documentation [here](https://atmospherejs.com/kadira/flow-router) for more details).  
+
+All the above fields are optional and fall back to default values in case you don't provide them. Default values are as follows:
+
+| Action          | route_code    | Route Name      | Route Path       | Template       | Redirect after Timeout |
+| --------------- | ------------- | --------------- | ---------------  | -------------- |:----------------------:|
+| change password | changePwd     | atChangePwd     | /change-password | fullPageAtForm |                        |
+| enroll account  | enrollAccount | atEnrollAccount | /enroll-account  | fullPageAtForm |            X           |
+| forgot password | forgotPwd     | atForgotPwd     | /forgot-password | fullPageAtForm |            X           |
+| reset password  | resetPwd      | atResetPwd      | /reset-password  | fullPageAtForm |            X           |
+| sign in         | signIn        | atSignIn        | /sign-in         | fullPageAtForm |                        |
+| sign up         | signUp        | atSignUp        | /sign-up         | fullPageAtForm |                        |
+| verify email    | verifyEmail   | atVerifyEmail   | /verify-email    | fullPageAtForm |            X           |
+| resend verification email    | resendVerificationEmail   | atresendVerificationEmail   | /send-again    | fullPageAtForm |                        |
 
 ## Content Protection
 
