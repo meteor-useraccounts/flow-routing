@@ -25,7 +25,7 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.imply([
-    'kadira:blaze-layout@2.0.0',
+    'kadira:blaze-layout@2.1.0',
     'kadira:flow-router@2.1.1',
     'useraccounts:core@1.12.3'
   ], ['client', 'server']);
