@@ -1,7 +1,7 @@
 /* global
-    UAFlowRouting: true,
+    UAFlowRoutingPlugin: true,
     UALog: true
 */
 
+UAFlowRoutingPlugin = undefined;
 UALog = undefined;
-UAFlowRouting = {};

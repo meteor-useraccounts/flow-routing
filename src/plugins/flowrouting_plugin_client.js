@@ -1,22 +1,26 @@
 /* global
+  FlowRouter: false,
   UAFlowRouting: false,
   UALog: false,
   UserAccounts: false,
-  FlowRouter: false
+  UAFlowRoutingPlugin: false
 */
 'use strict';
 
-_.extend(UAFlowRouting, {
-
-  // Previous path used for redirect after form submit
+_.extend(UAFlowRoutingPlugin.prototype, {
+  /**
+   *  Previous path used for redirect after form submit
+   */
   _prevPath: null,
 
-  // Possibly keeps reference to the handle for the timed out redirect
-  // set on some routes
+  /**
+   *  Possibly keeps reference to the handle for the timed out redirect
+   *  set on some routes
+   */
   timedOutRedirect: null,
 
   /*
-  clearState = function() {
+  clearState = function clearState() {
     _.each(this._fields, function(field) {
       field.clearStatus();
     });
@@ -36,27 +40,37 @@ _.extend(UAFlowRouting, {
   */
 
   getparamToken: function getparamToken() {
+    UALog.trace('UAFlowRoutingPlugin.getparamToken');
+
     return FlowRouter.getParam('paramToken');
   },
 
   // Getter for previous route's path
   getPrevPath: function getPrevPath() {
+    UALog.trace('UAFlowRoutingPlugin.getPrevPath');
+
     return this._prevPath;
   },
 
   // Setter for previous route's path
   setPrevPath: function setPrevPath(newPath) {
+    UALog.trace('UAFlowRoutingPlugin.setPrevPath');
+
     check(newPath, String);
     this._prevPath = newPath;
   },
 
   ensureSignedIn: function ensureSignedIn(context, redirect) {
+    var defaultState;
     var signInRouteName;
+
+    UALog.trace('UAFlowRoutingPlugin.ensureSignedIn');
 
     if (!Meteor.userId()) {
       // if we're not already on an AT route
       if (!_.contains(UserAccounts.knownRoutes, context.route.name)) {
-        UserAccounts.setState(UserAccounts.options.defaultState, function() {
+        defaultState = UserAccounts.options.defaultState;
+        UserAccounts.setState(defaultState, function setDefaultState() {
           var err = UserAccounts.texts.errors.mustBeLoggedIn;
           UserAccounts.state.form.set('error', [err]);
         });
@@ -77,29 +91,58 @@ _.extend(UAFlowRouting, {
       }
     }
   },
-});
 
-UserAccounts._startupHooks.push(function flowRoutingStartup() {
-  UALog.debug('Initializing flow-routing');
-  // Possibly add a link callback in case the links plugin exists
-  if (UserAccounts.links) {
-    UserAccounts.links.onClick(function onClick(uaTmpl, route) {
-      var path;
+  init: function init() {
+    var oldFRInitialize;
 
-      if (uaTmpl.isDisabled()) {
-        return;
-      }
-      path = UserAccounts.flowrouting.getRoutePath(route);
-      if (path !== '#' && path !== FlowRouter.current().path) {
-        return function onClickCB() {
-          Meteor.defer(function frGo() {
-            FlowRouter.go(path);
-            uaTmpl.setState(route);
-          });
-        };
+    UserAccounts._startupHooks.push(function flowRoutingStartup() {
+      UALog.trace('Initializing flow-routing');
+      // Possibly add a link callback in case the links plugin exists
+      if (UserAccounts.links) {
+        UserAccounts.links.onClick(function onClick(uaTmpl, route) {
+          var path;
+
+          if (uaTmpl.isDisabled()) {
+            return null;
+          }
+          path = UserAccounts.flowrouting.getRoutePath(route);
+          if (path !== '#' && path !== FlowRouter.current().path) {
+            return function onClickCB() {
+              Meteor.defer(function frGo() {
+                FlowRouter.go(path);
+                uaTmpl.setState(route);
+              });
+            };
+          }
+        });
       }
     });
-  }
+
+    // Stores previous path on path change...
+    FlowRouter.triggers.exit([
+      function frExit(context) {
+        var routeName = context.route.name;
+        var knownRoute = _.contains(UAFlowRouting.knownRoutes, routeName);
+        if (!knownRoute) {
+          UAFlowRouting.setPrevPath(context.path);
+        }
+      },
+    ]);
+
+
+    // FlowRouter Initialization
+    if (FlowRouter && FlowRouter.initialize) {
+      // In order for ensureSignIn triggers to work,
+      // UserAccounts must be initialized before FlowRouter
+      // (this is now true since useraccounts:core is being executed first...)
+      oldFRInitialize = FlowRouter.initialize;
+      FlowRouter.initialize = function initializeFlowRouter() {
+        // TODO: check Initialization time sequence!
+        // UserAccounts._init();
+        oldFRInitialize.apply(this, arguments);
+      };
+    }
+  },
 });
 
 /*
@@ -200,7 +243,12 @@ UserAccounts.submitCallback = function(error, state, onSuccess) {
       onSuccess();
     }
 
-    if (_.contains(['enrollAccount', 'forgotPwd', 'resetPwd', 'verifyEmail'], state)) {
+    if (_.contains([
+        'enrollAccount',
+        'forgotPwd',
+        'resetPwd',
+        'verifyEmail'
+    ], state)) {
       var redirectTimeout = UserAccounts.options.redirectTimeout;
       if (redirectTimeout > 0) {
         UserAccounts.timedOutRedirect = Meteor.setTimeout(function() {
@@ -216,29 +264,3 @@ UserAccounts.submitCallback = function(error, state, onSuccess) {
   }
 };
 */
-
-
-// Stores previous path on path change...
-FlowRouter.triggers.exit([
-  function frExit(context) {
-    var routeName = context.route.name;
-    var knownRoute = _.contains(UAFlowRouting.knownRoutes, routeName);
-    if (!knownRoute) {
-      UAFlowRouting.setPrevPath(context.path);
-    }
-  },
-]);
-
-
-// FlowRouter Initialization
-if (FlowRouter && FlowRouter.initialize) {
-  // In order for ensureSignIn triggers to work,
-  // UserAccounts must be initialized before FlowRouter
-  // (this is now true since useraccounts:core is being executed first...)
-  var oldInitialize = FlowRouter.initialize;
-  FlowRouter.initialize = function initializeFlowRouter() {
-    // TODO: check Initialization time sequence!
-    // UserAccounts._init();
-    oldInitialize.apply(this, arguments);
-  };
-}

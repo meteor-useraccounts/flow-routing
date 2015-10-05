@@ -41,10 +41,14 @@ Package.onUse(function pkgOnUse(api) {
   api.addFiles([
     'src/_globals.js',
     'src/logger.js',
-    'src/main.js',
+    'src/plugins/flowrouting_plugin.js',
   ], Both);
 
   api.addFiles([
-    'src/client.js',
+    'src/plugins/flowrouting_plugin_client.js',
   ], Client);
+
+  api.addFiles([
+    'src/main.js',
+  ], Both);
 });
