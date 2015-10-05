@@ -10,4 +10,4 @@
 //  Create the logger for this package
 // ------------------------------------
 UALog = new Logger('useraccounts:flowrouting');
-UserAccounts.setLogLevel('flowrouting', UALog);
+UserAccounts.setLogLevel(UALog);
