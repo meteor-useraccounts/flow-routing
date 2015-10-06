@@ -17,10 +17,11 @@ UALog.trace('Loading flowrouting_plugin.js');
 
 // define the UAFlowRoutingPlugin class
 UAFlowRoutingPlugin = function _UAFlowRoutingPlugin() {
-  // Call the parent constructor
-  UAPlugin.call(this);
+  var self = this;
 
-  this._id = 'flowrouting';
+  UAPlugin.call(self);
+
+  self._id = 'flowrouting';
 };
 
 // inherit UAPlugin
