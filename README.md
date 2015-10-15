@@ -1,3 +1,5 @@
+[![Meteor Icon](http://icon.meteor.com/package/useraccounts:flow-routing)](https://atmospherejs.com/useraccounts/flow-routing)
+
 # Flow Router add-on for User Accounts
 
 User Accounts is a suite of packages for the [Meteor.js](https://www.meteor.com/) platform. It provides highly customizable user accounts UI templates for many different front-end frameworks. At the moment it includes forms for sign in, sign up, forgot password, reset password, change password, enroll account, and link or remove of many 3rd party services.
@@ -12,11 +14,11 @@ Assuming you have a main layout that looks like this:
 
 ```handlebars
 <template name="myLayout">
-  
+
   <div class="nav">
     {{> Template.dynamic template=nav}}
   </div>
-  
+
   <div class="content">
     {{> Template.dynamic template=main}}
   </div>
@@ -24,7 +26,7 @@ Assuming you have a main layout that looks like this:
   <footer>
     {{> Template.dynamic template=footer}}
   </footer>
-  
+
 </template>
 ```
 
@@ -52,7 +54,7 @@ AccountsTemplates.configure({
 });
 ```
 
-Useraccounts:flow-routing uses the internal useraccounts 
+Useraccounts:flow-routing uses the internal useraccounts
 
 ```fullPageAtForm``` is the built-in template useraccounts uses by default for its forms. You can override it on a per-route basis (see below) or replace it with ```defaultTemplate:``` field as above (templates specified in route config will still take precedence).  Omit ```defaultTemplate``` (or set to an empty string) to use the ```fullPageAtForm``` template built-in to your useraccounts UI package (ex [material](https://github.com/meteor-useraccounts/materialize/blob/master/lib/full_page_at_form.html)).
 
@@ -62,7 +64,7 @@ NOTE: The above configs must load BEFORE your AccountsTemplates routes are defin
 
 There are no routes provided by default, but you can easily configure routes for sign in, sign up, forgot password, reset password, change password, enroll account using `AccountsTemplates.configureRoute`.  
 
-The simplest way is to make the call passing in only a route code (available route codes are: signIn, signUp, changePwd, forgotPwd, resetPwd, enrollAccount). 
+The simplest way is to make the call passing in only a route code (available route codes are: signIn, signUp, changePwd, forgotPwd, resetPwd, enrollAccount).
 
 This will set up the sign in route with a full-page form:
 
