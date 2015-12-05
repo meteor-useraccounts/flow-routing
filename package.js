@@ -30,8 +30,8 @@ Package.onUse(function(api) {
 
   api.use([
      'react',
-     'kadira:blaze-layout',
-     'kadira:react-layout',
+     'kadira:blaze-layout@2.3.0',
+     'kadira:react-layout@1.5.2',
      'gwendall:blaze-to-react@0.1.2'
   ], ['client', 'server'], { weak: true });
 
