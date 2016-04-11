@@ -24,7 +24,7 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.imply([
-    'kadira:flow-router@2.11.0',
+    'kadira:flow-router@2.10.1',
     'useraccounts:core@1.14.1',
   ], ['client', 'server']);
 
