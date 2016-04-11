@@ -9,7 +9,7 @@
 Package.describe({
   name: 'useraccounts:flow-routing',
   summary: 'UserAccounts package providing routes configuration capability via kadira:flow-router.',
-  version: '1.14.1',
+  version: '1.14.2',
   git: 'https://github.com/meteor-useraccounts/flow-routing.git',
 });
 
@@ -25,7 +25,7 @@ Package.onUse(function(api) {
 
   api.imply([
     'kadira:flow-router@2.10.1',
-    'useraccounts:core@1.14.1',
+    'useraccounts:core@1.14.2',
   ], ['client', 'server']);
 
   api.use([
