@@ -158,7 +158,8 @@ AccountsTemplates.configureRoute('signIn', {
     nav: 'customNav',
     footer: 'customFooter'
   },
-  contentRegion: 'main'
+  contentRegion: 'main',
+  redirect: '/user-profile'
 });
 ```
 
@@ -177,11 +178,23 @@ AccountsTemplates.configureRoute('signIn', {
     nav: <CustomNav />,
     footer: <CustomFooter />
   },
-  contentRegion: 'main'
+  contentRegion: 'main',
+  redirect: '/user-profile'
 });
 ```
 
 All options are passed to FlowRouter.route() which then creates a new custom route (see the official Flow Router documentation [here](https://atmospherejs.com/kadira/flow-router) for more details).  
+
+The `redirect` field permits to specify where to redirect the user after successful form submit. Actually, `redirect` can be a function so that, for example, the following:
+
+```javascript
+AccountsTemplates.configureRoute('signIn', {
+    redirect: function(){
+        var user = Meteor.user();
+        if (user)
+          Router.go('/user/' + user._id);
+    }
+});
 
 Default values for all fields are as follows:
 
