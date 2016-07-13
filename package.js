@@ -31,7 +31,8 @@ Package.onUse(function(api) {
 
   api.use([
      'kadira:blaze-layout@2.3.0',
-     'gwendall:blaze-to-react@0.1.2'
+     //'gwendall:blaze-to-react'
+     'gadicc:blaze-react-component'
   ], ['client', 'server'], { weak: true });
 
   api.addFiles([
