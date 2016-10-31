@@ -64,6 +64,8 @@ NOTE: The above configs must load BEFORE your AccountsTemplates routes are defin
 
 ## React Configuration
 
+If you want to include React as a NPM package please take a look at [Custom Configuration](#custom-configuration).  
+
 Firstly, please ensure that your app depends upon the [React Layout][3] and the [Blaze Layout][2] packages. User Accounts currents only renders Blaze templates. In order to use User Accounts with React we rely on the [Blaze To React][4] package to render the User Accounts templates.
 
 Before you configure routes for User Accounts with Flow Router, you will need to make sure you have set a few default configuration items.  
@@ -109,7 +111,7 @@ If you don't have extra content regions (nav, footer, etc) you should pass an em
 
 ```js
 AccountsTemplates.configure({
-	defaultLayoutType: 'blaze-to-react',
+  defaultLayoutType: 'blaze-to-react',
   defaultTemplate: 'myCustomFullPageAtForm',
   defaultLayout: MainLayout,
   defaultLayoutRegions: {},
@@ -122,6 +124,58 @@ AccountsTemplates.configure({
 Please note that this template must be a **Blaze** template. It will be rendered into your React layout using [Blaze To React][4].
 
 NOTE: The above configs must load BEFORE your AccountsTemplates routes are defined (next section).
+
+## Custom Configuration
+
+You can set `defaultLayoutType` or `layoutType` to use a custom render function which is defined with `defaultCustomRender` or `customRender`. 
+
+Assuming you have a React main layout and a sign up page: 
+
+```jsx
+MainLayout = React.createClass({
+  render() {
+    return (
+      <div>
+        <main>
+          {this.props.main}
+        </main>
+      </div>
+    );
+  }
+});
+
+SignUp = React.createClass({
+  render() {
+    return (
+      <div>
+        Sign up ...
+      </div>
+    );
+  }
+});
+```
+
+You want to use the NPM [react-mounter](https://github.com/kadirahq/react-mounter) package to mount this page. 
+
+```jsx
+import { mount } from 'react-mounter';
+
+AccountsTemplates.configure({
+  defaultLayoutType: 'custom',
+  defaultCustomRender: (layoutTemplate, layoutRegions) => {
+    mount(layoutTemplate, layoutRegions);
+  },
+  defaultLayout: MainLayout,
+  defaultLayoutRegions: {},
+  defaultContentRegion: 'main'
+});
+
+AccountsTemplates.configureRoute('signUp', {
+	name: 'signUp',
+	path: '/sign-up',
+	template: <SignUp />
+});
+```
 
 ## Routes
 
