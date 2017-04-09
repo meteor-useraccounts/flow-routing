@@ -195,7 +195,7 @@ AccountsTemplates.configureRoute('signIn', {
           Router.go('/user/' + user._id);
     }
 });
-
+```
 Default values for all fields are as follows:
 
 | Action          | route_code    | Route Name      | Route Path       | Template       | Redirect after Timeout |
